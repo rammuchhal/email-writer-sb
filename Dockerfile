@@ -1,14 +1,14 @@
-# Use Java 21 official image from Eclipse Temurin
+# Use Java 21 base image
 FROM eclipse-temurin:21-jdk-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy project files
+# Copy all files
 COPY . .
 
-# Build the Spring Boot app using Maven Wrapper
-RUN ./mvnw package -DskipTests
+# Make mvnw executable and build the app
+RUN chmod +x mvnw && ./mvnw package -DskipTests
 
-# Run the JAR file (Render sets PORT in env)
+# Run the JAR
 CMD ["sh", "-c", "java -jar target/*.jar"]
